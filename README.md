@@ -103,16 +103,17 @@ As we can see from Figure below the net has been trained for more than 2 hours,i
 <p align="center">
     <img width="800"src="/image/training chart.JPG">
 </p>
+
 # Model performance evaluation on Test set
 
 Looking at the confusion matrix computed on test set we can note that only 101 images has been misclassified leading to an accuracy of 99.53%, so I  can consider that the  model is a very good model even without tuning the hyperparameters
 Below I report the association between name class and label assigned to the class:
 
-- 1. Beer
-- 2. Plastic
-- 3. Soda
-- 4. Water
-- 5. Wine
+- 1 Beer
+- 2 Plastic
+- 3 Soda
+- 4 Water
+- 5 Wine
 
 ```
 true_test_labels = test.Labels;
@@ -123,7 +124,7 @@ C = confusionmat(true_test_labels, pred_test_labels);
 confusionchart(C)
 ```
 <p align="center">
-    <img width="800"src="/image/conftest.JPG">
+    <img width="800"src="/image/conftest.jpg">
 </p>
 
 As we can from the confusion matrix most of errors occured in the beer predicted class, instead the predicted class with less errors has been plastic class with only 1 misclassification error.
