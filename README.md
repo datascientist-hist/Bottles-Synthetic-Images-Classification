@@ -98,8 +98,34 @@ opts = trainingOptions("sgdm",...
 ```
 [net, traininfo] = trainNetwork(resized_images_train,resnet_18,opts);
 ```
-As we can see from Figure 9 the net has been trained for more than 2 hours,it has been able to reach a good accuracy after the second epoch, furthermore from the training chart it doesn't seem to be overfitting since that train accuracy and validation accuracy have almost the same value.Since I left 4300 images out for each categories from training phase, I will use them to test the real performance of the model.
+As we can see from Figure below the net has been trained for more than 2 hours,it has been able to reach a good accuracy after the second epoch, furthermore from the training chart it doesn't seem to be overfitting since that train accuracy and validation accuracy have almost the same value.Since I left 4300 images out for each categories from training phase, I will use them to test the real performance of the model.
 
 <p align="center">
     <img width="800"src="/image/training chart.JPG">
 </p>
+# Model performance evaluation on Test set
+
+Looking at the confusion matrix computed on test set we can note that only 101 images has been misclassified leading to an accuracy of 99.53%, so I  can consider that the  model is a very good model even without tuning the hyperparameters
+Below I report the association between name class and label assigned to the class:
+
+- 1. Beer
+- 2. Plastic
+- 3. Soda
+- 4. Water
+- 5. Wine
+
+```
+true_test_labels = test.Labels;
+pred_test_labels = classify(net, rsz_test);
+accuracy_test = mean(true_test_labels == pred_test_labels);
+
+C = confusionmat(true_test_labels, pred_test_labels);
+confusionchart(C)
+```
+<p align="center">
+    <img width="800"src="/image/conftest.JPG">
+</p>
+
+As we can from the confusion matrix most of errors occured in the beer predicted class, instead the predicted class with less errors has been plastic class with only 1 misclassification error.
+
+Maybe training the model with all the images that are available and fine-tuning the hyperparameters I could obtain better result even if I think that do better than this becomes very hard indeed we could obtain the opposite effect making the model worse
