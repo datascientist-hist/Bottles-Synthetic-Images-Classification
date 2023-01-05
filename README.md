@@ -37,6 +37,20 @@ To perform this task I could  train one of the most famous nets from scratch but
 
 Hence in this case, i will use transfer learning technique starting from a  pre-trained-model among those are available in MatLab and retraining the net  with new output starting from the weights of the pre-trained model.
 
-<img src="/image/pretrained_image.png" align="center" width="800" />
+<p align="center">
+  <img width="800"src="/image/pretrained_image.png">
+</p>
+
+# Choosing the Neural Network
+**From the Figure above we can see that we have a lot of available nets, so which is the best net for our task?**
+
+Since the task is not so hard, different nets can be good to solve this task, so I decided to have a look to the winning nets of ImageNet Large Scale Visual Recognition Challenge (ILSVRC)(Figure 3).ILSVRC evaluates algorithms for object detection and image classification at large scale,it has been held from 2010 to 2017 and then has been stopped since it has been reached an high level of accuracy very close to 98-99%.Hence, looking at the performance of the nets in the challenge I decided to choose **ResNet** architecture but since the net has  152 layers with more then 50 millions parameters i chose the lighter version called ResNet-18 with only 18 layers and 11.7 millions parameters
+
+<p align="center">
+  <img width="800"src="/image/Original-ResNet-18-Architecture.png">
+  <img width="800"src="/image/resnet.png">
+</p>
+
+
 
 
