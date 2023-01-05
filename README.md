@@ -3,6 +3,7 @@
 
 # Data Exploration
  [**Link to the Dataset**](https://www.kaggle.com/datasets/vencerlanz09/bottle-synthetic-images-dataset)
+ 
  [**Link to complete report**](/pdf/Report_Giuseppe_Pulino.pdf)
 
 The dataset contains synthetically generated images of bottles scattered around random backgrounds.
@@ -53,5 +54,52 @@ Since the task is not so hard, different nets can be good to solve this task, so
 </p>
 
 
+# Data Processing
 
+Since I had a problem with my computational power during the training of the net, I decided to reduce the number of images for each categories during the train phase using the following partition:
 
+- Train with respectively 500 images for categories 
+- Validation  with respectively 200 images for categories 
+- Test with respectively 4300 images for categories 
+
+```
+[train,validation,test] = splitEachLabel(image_datastore,0.1, 0.04, 0.86, 'randomized');
+```
+
+Then i proceeded resizing the image to give in input to net from 512-by-512 X 3 to 224-by-224 X 3
+
+```
+resized_images_train=augmentedImageDatastore([224 224 3],train);
+resized_images_validation = augmentedImageDatastore([224 224 3],validation);
+resized_images_test = augmentedImageDatastore([224 224 3],test);
+```
+
+I could have used data augmentation procedure to allow to the model generalize more, but since there is already randomness in the images for example bottles rotated,bottles shifted, I preferred don't use that procedure due to my limited computational power.
+
+# Training ResNet-18
+
+After data preprocessing step i setted the hyperparameter
+
+```
+opts = trainingOptions("sgdm",...
+    "ExecutionEnvironment","auto",...
+    "InitialLearnRate",0.01,...
+    "MaxEpochs",10,...
+    "MiniBatchSize",64,...
+    "Shuffle","every-epoch",...
+    "ValidationFrequency",70,...
+    "Plots","training-progress",...
+    "ValidationData",resized_images_validation,...
+    "Momentum",0.9);
+```
+ 
+ and I trained the net
+ 
+```
+[net, traininfo] = trainNetwork(resized_images_train,resnet_18,opts);
+```
+As we can see from Figure 9 the net has been trained for more than 2 hours,it has been able to reach a good accuracy after the second epoch, furthermore from the training chart it doesn't seem to be overfitting since that train accuracy and validation accuracy have almost the same value.Since I left 4300 images out for each categories from training phase, I will use them to test the real performance of the model.
+
+<p align="center">
+    <img width="800"src="/image/training chart.JPG">
+</p>
