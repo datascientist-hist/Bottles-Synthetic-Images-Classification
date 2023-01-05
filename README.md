@@ -3,6 +3,7 @@
 
 # Data Exploration
  [**Link to the Dataset**](https://www.kaggle.com/datasets/vencerlanz09/bottle-synthetic-images-dataset)
+ [**Link to complete report**](/pdf/Report_Giuseppe_Pulino.pdf)
 
 The dataset contains synthetically generated images of bottles scattered around random backgrounds.
 The main folder  contains 25000 Images divided in 5 categories containing each one 5000 images with a resolution of 512 X 512 RGB and JPG as file extension.
