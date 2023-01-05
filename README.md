@@ -13,7 +13,10 @@ The categories are the following:
 - Plastic Bottles
 - Beer Bottles
 
-<img src="/image/collage.png" align="center" width="500" />
+<p align="center">
+  <img width="600"src="/image/collage.png">
+</p>
+
 
 As we can see in the example, images can contain more than one  bottles but always of the same type as the creator of the dataset reported.
 
