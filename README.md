@@ -12,6 +12,6 @@ The categories are the following:
 - Water Bottles
 - Plastic Bottles
 - Beer Bottles
--
+
 -<img src="/image/collage.png" align="center" width="500" />
 
