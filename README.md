@@ -1,4 +1,4 @@
-# Huge Bottles Synthetic Images Classification
+# Bottles Synthetic Images Classification
 ![](/image/dataset-cover.jpg)
 
 # Data Exploration
