@@ -1,5 +1,7 @@
 # Bottles Synthetic Images Classification
-![](/image/dataset-cover.jpg)
+<p align="center">
+  <img width="400"src="/image/dataset-cover.jpg">
+</p>
 
 # Data Exploration
  [**Link to the Dataset**](https://www.kaggle.com/datasets/vencerlanz09/bottle-synthetic-images-dataset)
