@@ -12,4 +12,4 @@ The categories are the following:
 - Water Bottles
 - Plastic Bottles
 - Beer Bottles
-![](/image/collage.png)
+![](/image/collage.png =x250)
