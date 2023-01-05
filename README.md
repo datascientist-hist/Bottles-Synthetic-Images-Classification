@@ -34,6 +34,6 @@ To perform this task I could  train one of the most famous nets from scratch but
 
 Hence in this case, i will use transfer learning technique starting from a  pre-trained-model among those are available in MatLab and retraining the net  with new output starting from the weights of the pre-trained model.
 
-<img src="/image/pretrained_image.png" align="center" width="500" />
+<img src="/image/pretrained_image.png" align="center" width="800" />
 
 
