@@ -13,5 +13,5 @@ The categories are the following:
 - Plastic Bottles
 - Beer Bottles
 
--<img src="/image/collage.png" align="center" width="500" />
+<img src="/image/collage.png" align="center" width="500" />
 
