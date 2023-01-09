@@ -127,6 +127,7 @@ confusionchart(C)
 ```
 <p align="center">
     <img width="800"src="/image/conftest.jpg">
+     <img width="800"src="/image/ metrics_phto.png">
 </p>
 
 As we can from the confusion matrix most of errors occured in the beer predicted class, instead the predicted class with less errors has been plastic class with only 1 misclassification error.
