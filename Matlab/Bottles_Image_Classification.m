@@ -27,7 +27,43 @@ true_validation_labels = validation.Labels;
 accuracy_validation = mean(true_validation_labels == pred_validation_labels);
 ConfVal = confusionmat(true_validation_labels, pred_validation_labels);
 confusionchart(ConfVal)
+%%
+val_precision=[0,0,0,0,0];
 
+for i = 1:length(ConfVal)
+        val_precision(i)=ConfVal(i,i)/sum(ConfVal(:,i));
+       %disp(precision(i))
+end
+val_precision;
+avg_val_precision=mean(val_precision);
+avg_val_precision;
+%%
+val_recall=[0,0,0,0,0];
+
+for i = 1:length(ConfVal)
+        val_recall(i)=ConfVal(i,i)/sum(ConfVal(i,:));
+       %disp(precision(i))
+end
+val_recall;
+avg_val_recall=mean(val_recall);
+avg_val_recall;
+
+%%
+val_F1_score=[0,0,0,0,0];
+for i = 1:length(val_recall)
+        val_F1_score(i)=(2*val_precision(i)*val_recall(i))/(val_precision(i)+val_recall(i));
+       %disp(precision(i))
+end
+val_F1_score;
+
+%%
+Classes = ["Beer Botlle";"Plastic Bottle";"Soda Bottle";"Water Bottle";"Wine Bottle"];
+Precision= reshape(val_precision,5,1);
+Recall=reshape(val_recall,5,1);
+F1_score=reshape(val_F1_score,5,1)
+val_metrics = table(Classes,Precision,Recall,F1_score);
+
+val_metrics
 
 %%
 true_test_labels = test.Labels;
@@ -35,8 +71,44 @@ true_test_labels = test.Labels;
 accuracy_test = mean(true_test_labels == pred_test_labels);
 C = confusionmat(true_test_labels, pred_test_labels);
 confusionchart(C)
+%%
+%%
+test_precision=[0,0,0,0,0];
 
+for i = 1:length(C)
+        test_precision(i)=C(i,i)/sum(C(:,i));
+       %disp(precision(i))
+end
+test_precision;
+avg_test_precision=mean(test_precision);
+avg_test_precision;
+%%
+test_recall=[0,0,0,0,0];
 
+for i = 1:length(C)
+        test_recall(i)=C(i,i)/sum(C(i,:));
+       %disp(precision(i))
+end
+test_recall;
+avg_test_recall=mean(test_recall);
+avg_test_recall;
+%%
+test_F1_score=[0,0,0,0,0];
+for i = 1:length(test_recall)
+        test_F1_score(i)=(2*test_precision(i)*test_recall(i))/(test_precision(i)+test_recall(i));
+       %disp(precision(i))
+end
+test_F1_score;
+avg_test_F1_score=mean(test_F1_score);
+
+%%
+Classes = ["Beer Botlle";"Plastic Bottle";"Soda Bottle";"Water Bottle";"Wine Bottle"];
+Precision= reshape(test_precision,5,1);
+Recall=reshape(test_recall,5,1);
+F1_score=reshape(test_F1_score,5,1)
+test_metrics = table(Classes,Precision,Recall,F1_score);
+
+test_metrics
 %%
 chosenClass = "Water Bottle";
 classIdx = find(net.Layers(end).Classes == chosenClass);
