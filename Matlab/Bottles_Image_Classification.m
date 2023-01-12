@@ -1,14 +1,17 @@
-path_to_images = "C:\Users\pepee\Desktop\Università\2 Anno\Neural Computing\Bottles Image Classification\MatLab\Bottle_Images";
+%% Loading Images
 
+path_to_images = "C:\Users\pepee\Desktop\Università\2 Anno\Neural Computing\Bottles Image Classification\MatLab\Bottle_Images";
 image_datastore = imageDatastore(path_to_images, "IncludeSubfolders",true,"LabelSource","foldernames");
 
+%% Splitting Dataset
 [train,validation,test] = splitEachLabel(image_datastore,0.1, 0.04, 0.86, 'randomized');
 
-%%
+%% Resizing Images
 rsz_train=augmentedImageDatastore([224 224 3],train);
 rsz_validation = augmentedImageDatastore([224 224 3],validation);
 rsz_test = augmentedImageDatastore([224 224 3],test);
-%%
+
+%% Setting hyperparameters Neural Network
 opts = trainingOptions("sgdm",...
     "ExecutionEnvironment","auto",...
     "InitialLearnRate",0.01,...
@@ -20,14 +23,17 @@ opts = trainingOptions("sgdm",...
     "ValidationData",rsz_validation,...
     "Momentum",0.9);
 
+%% Training Neural Network
 [net, traininfo] = trainNetwork(rsz_train,resnet_18,opts);
-%%
+
+%% Computing Confusion Matrix on Validation Set
 true_validation_labels = validation.Labels;
 [pred_validation_labels,score_validation] = classify(net, rsz_validation);
 accuracy_validation = mean(true_validation_labels == pred_validation_labels);
 ConfVal = confusionmat(true_validation_labels, pred_validation_labels);
 confusionchart(ConfVal)
-%%
+
+%% Computing Precision on Validation Set
 val_precision=[0,0,0,0,0];
 
 for i = 1:length(ConfVal)
@@ -37,7 +43,8 @@ end
 val_precision;
 avg_val_precision=mean(val_precision);
 avg_val_precision;
-%%
+
+%% Computing Recall on Validation Set
 val_recall=[0,0,0,0,0];
 
 for i = 1:length(ConfVal)
@@ -48,7 +55,7 @@ val_recall;
 avg_val_recall=mean(val_recall);
 avg_val_recall;
 
-%%
+%% Computing F1 Score on Validation Set
 val_F1_score=[0,0,0,0,0];
 for i = 1:length(val_recall)
         val_F1_score(i)=(2*val_precision(i)*val_recall(i))/(val_precision(i)+val_recall(i));
@@ -56,7 +63,8 @@ for i = 1:length(val_recall)
 end
 val_F1_score;
 
-%%
+%% Joining metrics in a table
+
 Classes = ["Beer Botlle";"Plastic Bottle";"Soda Bottle";"Water Bottle";"Wine Bottle"];
 Precision= reshape(val_precision,5,1);
 Recall=reshape(val_recall,5,1);
@@ -65,14 +73,14 @@ val_metrics = table(Classes,Precision,Recall,F1_score);
 
 val_metrics
 
-%%
+%% Computing Confusion Matrix on Test Set
 true_test_labels = test.Labels;
 [pred_test_labels,score_test] = classify(net, rsz_test);
 accuracy_test = mean(true_test_labels == pred_test_labels);
 C = confusionmat(true_test_labels, pred_test_labels);
 confusionchart(C)
-%%
-%%
+
+%% Computing Precision on Test Set
 test_precision=[0,0,0,0,0];
 
 for i = 1:length(C)
@@ -82,7 +90,8 @@ end
 test_precision;
 avg_test_precision=mean(test_precision);
 avg_test_precision;
-%%
+
+%% Computing Recall on Test Set
 test_recall=[0,0,0,0,0];
 
 for i = 1:length(C)
@@ -92,7 +101,8 @@ end
 test_recall;
 avg_test_recall=mean(test_recall);
 avg_test_recall;
-%%
+
+%% Computing F1 Score on Test Set
 test_F1_score=[0,0,0,0,0];
 for i = 1:length(test_recall)
         test_F1_score(i)=(2*test_precision(i)*test_recall(i))/(test_precision(i)+test_recall(i));
@@ -101,7 +111,7 @@ end
 test_F1_score;
 avg_test_F1_score=mean(test_F1_score);
 
-%%
+%% Joing metrics in a table
 Classes = ["Beer Botlle";"Plastic Bottle";"Soda Bottle";"Water Bottle";"Wine Bottle"];
 Precision= reshape(test_precision,5,1);
 Recall=reshape(test_recall,5,1);
@@ -109,7 +119,8 @@ F1_score=reshape(test_F1_score,5,1)
 test_metrics = table(Classes,Precision,Recall,F1_score);
 
 test_metrics
-%%
+
+%% Showing misclassified images on true Water Bottle class
 chosenClass = "Water Bottle";
 classIdx = find(net.Layers(end).Classes == chosenClass);
 
@@ -120,7 +131,8 @@ numImgsToShow = 9;
 
 figure
 plotImages(test,imgIdx,sortedScores,pred_test_labels,numImgsToShow)
-%%
+
+%% Function used to search Images with max prediction score
 function [sortedScores,imgIdx] = findMaxActivatingImages(imds,className,predictedScores,numImgsToShow)
 % Find the predicted scores of the chosen class on all the images of the chosen class
 % (e.g. predicted scores for sushi on all the images of sushi)
@@ -134,6 +146,8 @@ imgIdx = imgsOfClassIdxs(idx(1:numImgsToShow));
 
 end
 
+%% Function used to search Images with min prediction score
+
 function [sortedScores,imgIdx] = findMinActivatingImages(imds,className,predictedScores,numImgsToShow)
 % Find the predicted scores of the chosen class on all the images of the chosen class
 % (e.g. predicted scores for sushi on all the images of sushi)
@@ -146,7 +160,7 @@ function [sortedScores,imgIdx] = findMinActivatingImages(imds,className,predicte
 imgIdx = imgsOfClassIdxs(idx(1:numImgsToShow));
 
 end
-%%
+%% Other functions
 function [scoresForChosenClass,imgsOfClassIdxs] = findScoresForChosenClass(imds,className,predictedScores)
 % Find the index of className (e.g. "sushi" is the 9th class)
 uniqueClasses = unique(imds.Labels);
